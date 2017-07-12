@@ -9,15 +9,15 @@ configs = {
     'db': {
         'host': '127.0.0.1',
         'port': 3306,
-        'user': 'awesome',
+        'user': 'fredshao',
         'password': 'jkilopqcv0968',
-        'database': 'awesome'
+        'database': 'db_zhenxinhuadamaoxian_01'
     },
     'web':{
         'host':'127.0.0.1',
         'port':80,
     },
     'session': {
-        'secret': 'Awesome'
+        'secret': 'zhenxinhuadamaoxian_01'
     }
 }
