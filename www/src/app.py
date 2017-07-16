@@ -19,6 +19,8 @@ from coroweb import add_routes, add_static
 
 from handlers import cookie2user, COOKIE_NAME
 
+from pathlib import Path
+
 def init_jinja2(app, **kw):
     logging.info('init jinja2...')
     options = dict(
@@ -31,7 +33,8 @@ def init_jinja2(app, **kw):
     )
     path = kw.get('path', None)
     if path is None:
-        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
+        www_path = Path(os.path.dirname(os.path.abspath(__file__))).parent
+        path = os.path.join(www_path, 'templates')
     logging.info('set jinja2 template path: %s' % path)
     env = Environment(loader=FileSystemLoader(path), **options)
     filters = kw.get('filters', None)
@@ -143,7 +146,7 @@ def init(loop):
     init_jinja2(app, filters=dict(datetime=datetime_filter))
     add_routes(app, 'handlers')
     add_static(app)
-    srv = yield from loop.create_server(app.make_handler(), configs.web.host, config.web.port)
+    srv = yield from loop.create_server(app.make_handler(), configs.web.host, configs.web.port)
     logging.info('server started at http://%s:%s' % (configs.web.host,configs.web.port))
     return srv
 

@@ -1,5 +1,7 @@
 create database db_zhenxinhuadamaoxian_01;
 
+use db_zhenxinhuadamaoxian_01;
+
 create table accounts(
 	`id` varchar(50) not null,
 	`email` varchar(50) not null,

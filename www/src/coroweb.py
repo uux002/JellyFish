@@ -8,6 +8,8 @@ from aiohttp import web
 
 from apis import APIError
 
+from pathlib import Path
+
 def get(path):
     '''
     Define decorator @get('/path')
@@ -139,9 +141,11 @@ class RequestHandler(object):
             return dict(error=e.error, data=e.data, message=e.message)
 
 def add_static(app):
-    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
-    app.router.add_static('/static/', path)
-    logging.info('add static %s => %s' % ('/static/', path))
+    #print("============== Path:" + os.path.dirname(os.path.abspath(__file__)))
+    www_path = Path(os.path.dirname(os.path.abspath(__file__))).parent
+    path = os.path.join(www_path, 'static')
+    app.router.add_static('/sttic/', path)
+    logging.info('add static %s => %s' % ('../static/', path))
 
 def add_route(app, fn):
     method = getattr(fn, '__method__', None)

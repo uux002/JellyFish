@@ -9,13 +9,13 @@ configs = {
     'db': {
         'host': '127.0.0.1',
         'port': 3306,
-        'user': 'fredshao',
+        'user': 'root',
         'password': 'jkilopqcv0968',
         'database': 'db_zhenxinhuadamaoxian_01'
     },
     'web':{
         'host':'127.0.0.1',
-        'port':80,
+        'port':9000,
     },
     'session': {
         'secret': 'zhenxinhuadamaoxian_01'

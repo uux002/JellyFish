@@ -11,7 +11,10 @@ from aiohttp import web
 from coroweb import get, post
 from apis import Page, APIValueError, APIResourceNotFoundError
 
-from models import User, Comment, Blog, next_id
+#from models import User, Comment, Blog, next_id
+
+import models
+
 from config import configs
 
 COOKIE_NAME = 'awesession'
@@ -74,6 +77,7 @@ def cookie2user(cookie_str):
 
 @get('/')
 def index(*, page='1'):
+    '''
     page_index = get_page_index(page)
     num = yield from Blog.findNumber('count(id)')
     page = Page(num)
@@ -81,10 +85,12 @@ def index(*, page='1'):
         blogs = []
     else:
         blogs = yield from Blog.findAll(orderBy='created_at desc', limit=(page.offset, page.limit))
+    '''
     return {
-        '__template__': 'blogs.html',
-        'page': page,
-        'blogs': blogs
+        '__template__': 'index.html'
+        #'__template__': 'blogs.html',
+        #'page': page,
+        #'blogs': blogs
     }
 
 @get('/blog/{id}')
