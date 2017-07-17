@@ -1,5 +1,20 @@
-#sub-nav-items li a{
-    color:blue ;
-    font-size:10px ;
+.tod-main-navbar{
+    padding-left:50px;
+    padding-top:8px;
+    height:40px;
+}
 
+.tod-sub-navbar
+{
+    padding-left:50px;
+    padding-bottom: 5px;
+    height:35px;
+}
+
+#tod-main-navbar-items li a{
+    font-size:24px;
+}
+
+#tod-sub-navbar-items li a{
+    font-size:10px;
 }
