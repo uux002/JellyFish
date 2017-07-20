@@ -83,7 +83,7 @@ def text2html(text):
 @get('/')
 def index(request):
     return {
-        '__template__': 'gridtest.html',
+        '__template__': 'index.html',
     }
 
 '''

@@ -2,18 +2,23 @@
 <html class="uk-height-1-1">
     <head>
         <title></title>
-        <link rel="stylesheet" href="../static/awesome/css/uikit/uikit.min.css" />
-        <link rel="stylesheet" href="test.css"/>
-        <script src="../static/awesome/js/jquery.min.js"></script>
-        <script src="../static/awesome/js/uikit/uikit.min.js"></script>
-        <script src="../static/awesome/js/uikit/uikit-icons.min.js"></script>
+        <link rel="stylesheet" href="static/awesome/css/uikit/uikit.min.css" />
+        <link rel="stylesheet" href="static/awesome/css/awesome.css"/>
+        <script src="static/awesome/js/jquery.min.js"></script>
+        <script src="static/awesome/js/uikit/uikit.min.js"></script>
+        <script src="static/awesome/js/uikit/uikit-icons.min.js"></script>
 
     </head>
     <body class="uk-height-1-1">
+        <!--
         <div uk-grid>
-            <div class="uk-width-auto" style="border:1px solid red">Logo</div>
+            <div class="uk-width-auto" style="border:1px solid red">
+                <img src="static/logo/1.jpg"/>
+            </div>
             <div class="uk-width-expand" style="border:1px solid green">NavBar</div>
         </div>
+        -->
+        {% include 'header.html' %}
     
         <div uk-grid class="uk-margin-remove-top" style="border:1px solid red; height:100%;">
             <div class="uk-width-expand" style="border:1px solid red">Content</div>

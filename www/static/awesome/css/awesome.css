@@ -1,3 +1,58 @@
-body{
-    border:3px solid red;
+
+/* ---------------- Header.html ---------------- */
+#header{
+    height:100px;
 }
+
+/* logo div */
+#logo{
+    width:80px;
+    height:80px;
+    margin-left:10px;
+    margin-top:15px;
+}
+
+/* 整个导航栏区域 */
+#navbar-field{
+    padding-left:0px;
+}
+
+/*主导航栏容器*/
+#navbar-main-field{
+    /*border:1px solid green;*/
+    height:60px;
+}
+
+/*主导航栏内容区域*/
+#navbar-main-field .uk-navbar-nav{
+    margin-left:100px;
+    margin-top:20px;
+}
+
+/* 次导航栏容器 */
+#navbar-sub-field{
+    /*border:1px solid blue;*/
+    height:40px;
+}
+
+/* 次导航栏容器 */
+#navbar-sub-field .uk-navbar-nav{
+    margin-top:20px;
+    margin-left:110px;
+}
+
+/* 主导航栏项 */
+.navbar-main-item{
+    font-size:22px !important;
+}
+
+/* 次导航栏项 */
+.navbar-sub-item{
+    font-size:14px !important;
+}
+
+
+
+
+
+/* --------------------- xxx.html ------------------- */
