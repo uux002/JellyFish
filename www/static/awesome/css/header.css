@@ -1,0 +1,29 @@
+#header{
+    height:75px;
+}
+
+#stay-bar-field{
+    height:18px;
+    background-color: #F0F0F0;
+    border-bottom:1px solid #808080;
+}
+
+#navbar-field{
+    padding-left:50px;
+    height:50px;
+    border-bottom:1px solid #5F99CF;
+    background-color: #CEE3F8;
+}
+
+#logo{
+    height:40px;
+    width:40px;
+}
+
+#navbar-main{
+    margin-top:25px;
+}
+
+#navbar-sub{
+    margin-top:25px;
+}
