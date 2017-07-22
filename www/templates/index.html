@@ -11,29 +11,28 @@
 
     </head>
     <body class="uk-height-1-1">
-        <!--
-        <div uk-grid>
-            <div class="uk-width-auto" style="border:1px solid red">
-                <img src="static/logo/1.jpg"/>
-            </div>
-            <div class="uk-width-expand" style="border:1px solid green">NavBar</div>
-        </div>
-        -->
+        <!-- Top Field -->
         {% include 'header.html' %}
     
-        <div uk-grid class="uk-margin-remove-top" style="height:100%">
-            <div class="uk-width-expand">
+        <!-- Middle Field -->
+        <div>
+            <div uk-grid class="uk-margin-remove-top" style="height:100%">
+                <div class="uk-width-expand">
                 {% include 'contents.html' %}
-            </div>
+                </div>
 
-            <div class="uk-width-auto uk-padding-remove">
-                {% include 'right_side.html' %}
+                <div class="uk-width-auto uk-padding-remove">
+                    {% include 'right_side.html' %}
+                </div>
             </div>
         </div>
 
-        <div uk-grid class="uk-margin-remove-top" style="background-color: red">
-            <div class="uk-width-expand" style="border:1px solid green">Footer</div>
+        <!-- Buttom Field -->
+        <div style="margin-top:30px;">
+            <div uk-grid class="uk-margin-remove-top" style="background-color: red">
+                <div class="uk-width-expand" style="border:1px solid green">Footer</div>
+            </div>
         </div>
-
+        
     </body>
 </html>
