@@ -3,6 +3,7 @@
     <head>
         <title></title>
         <link rel="stylesheet" href="static/awesome/css/uikit/uikit.min.css" />
+        <link rel="stylesheet" href="static/awesome/css/awesome.css"/>
         <link rel="stylesheet" href="static/awesome/css/header.css"/>
         <script src="static/awesome/js/jquery.min.js"></script>
         <script src="static/awesome/js/uikit/uikit.min.js"></script>
@@ -18,11 +19,16 @@
             <div class="uk-width-expand" style="border:1px solid green">NavBar</div>
         </div>
         -->
-        {% include 'newheader.html' %}
+        {% include 'header.html' %}
     
-        <div uk-grid class="uk-margin-remove-top" style="border:1px solid red; height:100%;">
-            <div class="uk-width-expand" style="border:1px solid red">Content</div>
-            <div class="uk-width-auto" style="border:1px solid blue">Right Side</div>
+        <div uk-grid class="uk-margin-remove-top" style="height:100%">
+            <div class="uk-width-expand">
+                {% include 'contents.html' %}
+            </div>
+
+            <div class="uk-width-auto uk-padding-remove">
+                {% include 'right_side.html' %}
+            </div>
         </div>
 
         <div uk-grid class="uk-margin-remove-top" style="background-color: red">

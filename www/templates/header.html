@@ -1,47 +1,34 @@
-<div uk-grid id="header">
-    <div class="uk-width-auto">
-         <!--<img src="static/logo/1.jpg" id="logo"/> -->
-     </div>
+<div id="header">
+    <div id="stay-bar-field">
+        <div id="stay-bar-content">这里可能需要写点什么内容</div>
+    </div>
 
-    <div class="uk-width-expand" id="navbar-field">
-        <div id="navbar-main-field">
-            <nav class="uk-navbar-container" uk-navbar style="height:100%">
-                <div class="uk-navbar-left">
-                    <ul class="uk-navbar-nav">
-                        <li>
-                            <a class="navbar-main-item" href="#">全部</a>
-                        </li>
-
-                        <li>
-                            <a class="navbar-main-item" href="#">真心话</a>
-                        </li>
-
-                        <li>
-                            <a class="navbar-main-item" href="#">大冒险</a>
-                        </li>
-                    </ul>
+    <div id="navbar-field" >
+        
+        <div uk-grid>
+            <div id="logo">
+                <div uk-grid>
+                    <div id="logo-img"><img src="static/logo/logo.png"/></div>
+                    <div id="logo-title">真心话大冒险</div>
                 </div>
-            </nav>
-        </div>
+            </div>
 
-        <div id="navbar-sub-field">
-            <nav class="uk-navbar-container" uk-navbar style="height:100%">
-                <div class="uk-navbar-left">
-                    <ul class="uk-navbar-nav">
-                        <li>
-                            <a class="navbar-sub-item" href="#">最热</a>
-                        </li>
-                        <li>
-                            <a class="navbar-sub-item" href="#">最新</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            <div id="navbar-main">
+                <div uk-grid>
+                    <div class="navbar-main-item"><a href="#">全部</a></div>
+                    <div class="navbar-main-item"><a class="navbar-main-item-selected" href="#">真心话</a></div>
+                    <div class="navbar-main-item"><a href="#">大冒险</a></div>
+                </div> 
+            </div>
+
+            <div id="navbar-sub">
+               <div uk-grid>
+                   <div class="navbar-sub-item"><a class="navbar-sub-item-selected" href="#">[最热]</a></div>
+                   <div class="navbar-sub-item"><a href="#">[最新]</a></div>
+               </div>
+            </div>
+            
         </div>
     </div>
 
-    <div id="logo" class="uk-position-left-top">
-        <img src="static/logo/1.jpg"/>
-    </div>
-
- </div>
+</div>
