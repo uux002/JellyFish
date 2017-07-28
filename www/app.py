@@ -19,11 +19,6 @@ from config import configs
 
 from handlers import cookie2user, COOKIE_NAME
 
-
-
-logging.info("test.....")
-print("hello...")
-
 def init_jinja2(app, **kw):
     logging.info('init jinja2...')
     options = dict(
@@ -69,6 +64,11 @@ async def auth_factory(app,handler):
         return (await handler(request))
     return auth
 
+async def test_factory(app,handler):
+    async def test(request):
+        logging.info("Test Factory: %s %s" % (request.method,request.path))
+        return (await handler(request))
+    return test
 
 async def data_factory(app, handler):
     async def parse_data(request):
@@ -152,7 +152,7 @@ async def init(loop):
         password=configs.db.password,
         database=configs.db.database)
     app = web.Application(loop=loop, middlewares=[
-        auth_factory, response_factory
+         auth_factory, test_factory, response_factory
     ])
     init_jinja2(app, filters=dict(datetime=datetime_filter))
     add_routes(app, 'handlers')

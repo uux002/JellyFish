@@ -20,6 +20,9 @@ from config import configs
 COOKIE_NAME = 'awesession'
 _COOKIE_KEY = configs.session.secret
 
+_RE_EMAIL = re.compile(r'^[a-z0-9\.\-\_]+\@[a-z0-9\-\_]+(\.[a-z0-9\-\_]+){1,4}$')
+_RE_SHA1 = re.compile(r'^[0-9a-f]{40}$')
+
 def check_admin(request):
     if request.__user__ is None or not request.__user__.admin:
         raise APIPermissionError()
@@ -81,10 +84,115 @@ def text2html(text):
     return ''.join(lines)
 
 @get('/')
-def index(request):
+def index():
     return {
         '__template__': 'index.html',
     }
+
+@get('/signin')
+def signin():
+    return{
+        '__template__': 'signin.html',
+    }
+
+@get('/signout')
+def signout():
+    pass
+
+@get('/signup')
+def signup():
+    return{
+        '__template__': 'signup.html'
+    }
+
+@get('/user/{id}')
+def get_user_profile(id):
+    pass
+
+@get('/public')
+def public_item():
+    return{
+        '__template__': 'public.html'
+    }
+
+@get('/zhenxinhua')
+def get_zhenxinhua():
+    pass
+
+@get('/damaoxian')
+def get_damaoxian():
+    pass
+
+@get('/zhenxinhua/{id}')
+def get_zhenxinhua_by_id(id):
+    return{
+        '__template__': 'zhenxinhua.html'
+    }
+
+@get('/damaoxian/{id}')
+def get_damaoxian_by_id(id):
+    return{
+        '__template__': 'damaoxian.html'
+    }
+
+
+# -------------------- APIs --------------------
+@post('/api/authenticate')
+def api_authenticate(*,email,passwd):
+    if not email:
+        raise APIValueError('email', 'Invalid email.')
+    if not passwd:
+        raise APIValueError('passwd', 'Invalid password.')
+    users = yield from User.findAll('email=?', [email])
+    if len(users) == 0:
+        raise APIValueError('email', 'Email not exist.')
+    user = users[0]
+    # check passwd:
+    sha1 = hashlib.sha1()
+    sha1.update(user.id.encode('utf-8'))
+    sha1.update(b':')
+    sha1.update(passwd.encode('utf-8'))
+    if user.passwd != sha1.hexdigest():
+        raise APIValueError('passwd', 'Invalid password.')
+    # authenticate ok, set cookie:
+    r = web.Response()
+    r.set_cookie(COOKIE_NAME, user2cookie(user, 86400), max_age=86400, httponly=True)
+    user.passwd = '******'
+    r.content_type = 'application/json'
+    r.body = json.dumps(user, ensure_ascii=False).encode('utf-8')
+    return r
+
+@get('/api/user')
+def api_get_user(*,id):
+    pass
+
+@get('/api/zhenxinhuadamaoxian')
+def api_get_zhenxinhuadamaoxian(*, page='1'):
+    pass
+
+@get('/api/zhenxinhua')
+def api_get_zhenxinhua(*, page='1'):
+    pass
+
+@get('/api/damaoxian')
+def api_get_damaoxian(*, page='1'):
+    pass
+
+@post('/api/public')
+def api_public():
+    pass
+
+@post('/api/public_comment')
+def api_public_comment():
+    pass
+
+@get('/api/comments')
+def api_get_comments(*, page='1'):
+    pass
+
+
+
+# ------------------------------------------------------------------ Ready Deleted Code ------------------------------------------------------------------
 
 '''
 @get('/')
@@ -168,8 +276,7 @@ def manage_create_blog():
         'action': '/api/blogs'
     }
 
-_RE_EMAIL = re.compile(r'^[a-z0-9\.\-\_]+\@[a-z0-9\-\_]+(\.[a-z0-9\-\_]+){1,4}$')
-_RE_SHA1 = re.compile(r'^[0-9a-f]{40}$')
+
 
 @post('/api/users')
 def api_register_user(*, email, name, passwd):
