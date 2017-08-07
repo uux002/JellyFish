@@ -19,6 +19,8 @@ from config import configs
 
 from handlers import cookie2user, COOKIE_NAME
 
+import models
+
 def init_jinja2(app, **kw):
     logging.info('init jinja2...')
     options = dict(
@@ -59,8 +61,10 @@ async def auth_factory(app,handler):
             if user:
                 logging.info('set current user: %s' % user.email)
                 request.__user__ = user
-        if request.path.startswith('/manage/') and (request.__user__ is None or not request.__user__.admin):
-            return web.HTTPFound('/singin')
+        # tmp code
+        #user = await cookie2user(cookie_str)
+        #request.__user__ = user
+        #logging.info("----------> " + request.__user__.nickname)     
         return (await handler(request))
     return auth
 

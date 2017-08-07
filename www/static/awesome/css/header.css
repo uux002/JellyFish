@@ -92,3 +92,24 @@
 .navbar-sub-item-selected{
     color:red !important;
 }
+
+
+/* 登录前后的信息 */
+#navbar-right{
+    padding-top:28px;
+    padding-right:20px;
+    font-size:12px;
+}
+
+#navbar-right a{
+    color: #336699;
+}
+
+#navbar-user-login{
+    padding-left:0px;
+    margin-right:10px;
+}
+
+#navbar-user-signup{
+    padding-left:0px;
+}

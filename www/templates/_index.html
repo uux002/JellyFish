@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html class="uk-height-1-1">
+    <head>
+        <title></title>
+        <link rel="stylesheet" href="static/awesome/css/uikit/uikit.min.css" />
+        <link rel="stylesheet" href="static/awesome/css/awesome.css"/>
+        <link rel="stylesheet" href="static/awesome/css/header.css"/>
+        <script src="static/awesome/js/jquery.min.js"></script>
+        <script src="static/awesome/js/uikit/uikit.min.js"></script>
+        <script src="static/awesome/js/uikit/uikit-icons.min.js"></script>
+
+    </head>
+    <body class="uk-height-1-1">
+        <!-- Top Field -->
+        {% include 'header.html' %}
+    
+        <!-- Middle Field -->
+        <div>
+            <div uk-grid class="uk-margin-remove-top" style="height:100%">
+                <div class="uk-width-expand">
+                {% include 'contents.html' %}
+                </div>
+
+                <div class="uk-width-auto uk-padding-remove">
+                    {% include 'right_side.html' %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Buttom Field -->
+        <div style="margin-top:30px; height:50px; background-color:#dddddd;">
+            <div uk-grid class="uk-margin-remove-top uk-height-1-1"> 
+                <div class="uk-width-expand uk-text-center">
+                    <div style="font-size:12px; margin-top:17px;">&copy; 2017 Treasland</div>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+</html>

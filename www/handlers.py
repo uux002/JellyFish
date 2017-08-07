@@ -14,7 +14,7 @@ from aiohttp import web
 from coroweb import get, post
 from apis import Page, APIValueError, APIResourceNotFoundError
 
-import models
+from models import Account, User,TruthOrDare,Comment
 from config import configs
 
 COOKIE_NAME = 'awesession'
@@ -56,6 +56,10 @@ def cookie2user(cookie_str):
     '''
     Parse cookie and load user if cookie is valid.
     '''
+    #user = User(id="00000",account_id="11111",nickname="FredShaoaaaaa",image="cccc")
+    #return user
+
+
     if not cookie_str:
         return None
     try:
@@ -84,9 +88,21 @@ def text2html(text):
     return ''.join(lines)
 
 @get('/')
-def index():
+def index(request):
+    if request.__user__ is not None:
+        logging.info("######### Request" + request.__user__.nickname)
+    else:
+         logging.info("--------------$$$ No User") 
+
     return {
         '__template__': 'index.html',
+        '__user__': request.__user__,
+    }
+
+@get('/signinsignup')
+def signin_or_signup():
+    return {
+        '__template__':'signinsignup.html',
     }
 
 @get('/signin')
