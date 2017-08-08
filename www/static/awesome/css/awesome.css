@@ -87,4 +87,53 @@
 
 
 
-/* ------------ 登录注册页 -------------
+/* ------------ 登录注册页 ------------- */
+#signinsignup{
+    /*border:1px solid red;*/
+    padding-top:50px;
+}
+
+
+#signup-field{
+    /*border:1px solid blue;*/
+    width:318px;
+    padding:0px;
+    margin-left:70px;
+}
+
+#signin-field{
+    /*border:1px solid green;*/
+    width:318px;
+    padding:0px;
+    margin-left:60px;
+}
+
+#signinup-middle-line{
+    border-right:1px solid gray;
+    padding:0px;
+    height:250px;
+    
+}
+
+.signinsignup-input{
+    width:255px;
+    margin-top:10px;
+}
+
+#signup-button{
+    margin-top:20px;
+    margin-left:195px;
+}
+
+.signinsignup-title{
+    font-size:14px;
+    color:#336699;
+    font-weight: bold;
+}
+
+#signinsignup-bottom-info{
+    /*border:1px solid red;*/
+    margin-left:30px;
+    margin-top:50px;
+    font-size:13px;
+}

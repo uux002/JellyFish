@@ -1,10 +1,38 @@
 {% extends 'base.html' %}
 
 {% block bodycontent %}
-{% include 'header.html' %}
-<div id="signinsignup">
+{% include 'signinsignupheader.html' %}
 
-aaa
+<div id="signinsignup" class="uk-flex uk-flex-center uk-width-1-1">
+    <div>
+        <div uk-grid>
+            <div id="signup-field">
+                <div class="signinsignup-title">建立一个新账户</div>
+                <div style="height:10px;"></div>
+                <form>
+                    <input class="uk-input signinsignup-input uk-form-small" type="text" placeholder="想个好听的昵称" name="nickname">
+                    <input class="uk-input signinsignup-input uk-form-small" type="text" placeholder="密码" name="signup-password">
+                    <input class="uk-input signinsignup-input uk-form-small" type="text" placeholder="确认密码" name="signup-confirm-password">
+                    <input class="uk-input signinsignup-input uk-form-small" type="text" placeholder="电子邮箱" name="signup-email">
+                    <button class="uk-button uk-button-primary uk-button-small" id="signup-button">注册</button>
+                </form>
+            </div>
+
+            <div id="signinup-middle-line"></div>
+
+            <div id="signin-field">
+                <div class="signinsignup-title">登入</div>
+                <input class="uk-input signinsignup-input uk-form-small" type="text" placeholder="电子邮箱" name="signin-email">
+                <input class="uk-input signinsignup-input uk-form-small" type="text" placeholder="密码" name="signin-password">
+                <button class="uk-button uk-button-primary uk-button-small" id="signup-button">登录</button>
+            </div>
+        </div>
+
+        <div id="signinsignup-bottom-info">
+            这里可以写点什么
+        </div>
+
+    </div>
 </div>
 
 {% endblock %}
