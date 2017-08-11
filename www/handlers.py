@@ -196,9 +196,9 @@ def api_get_damaoxian(*, page='1'):
 
 @post('/api/users')
 #def api_register_user(*, nickname, email, password):
-def api_register_user():
-    #logging.info("===========> %s %s %s" % (nickname, email, password))
+def api_register_user(*, nickname, email, password):
     logging.info("==============> On Register Function") 
+    logging.info("===========> %s %s %s" % (nickname, email, password))
     #return r
 
 @post('/api/public')

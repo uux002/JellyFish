@@ -9,24 +9,25 @@
             <div id="signup-field">
                 <div class="signinsignup-title">建立一个新账户</div>
                 <div style="height:10px;"></div>
-                <form id="signup-form">
+                <div id="signup-form">
                     <input v-model="signup_nickname" class="uk-input signinsignup-input uk-form-small" type="text" placeholder="想个好听的昵称" name="nickname">
                     <input v-model="signup_email" class="uk-input signinsignup-input uk-form-small" type="text" placeholder="密码" name="signup-password">
                     <input v-model="signup_password" class="uk-input signinsignup-input uk-form-small" type="text" placeholder="确认密码" name="signup-confirm-password">
                     <input v-model="signup_password2" class="uk-input signinsignup-input uk-form-small" type="text" placeholder="电子邮箱" name="signup-email">
                     <button v-on:click="toSignup" class="uk-button uk-button-primary uk-button-small" id="signup-button">注册</button>
-                </form>
+                </div>
             </div>
 
             <div id="signinup-middle-line"></div>
 
             <div id="signin-field">
                 <div class="signinsignup-title">登入</div>
-                <form id="signin-form">
+                <div style="height:10px;"></div>
+                <div id="signin-form">
                     <input v-model="signin_email" class="uk-input signinsignup-input uk-form-small" type="text" placeholder="电子邮箱" name="signin-email">
                     <input v-model="signup_password" class="uk-input signinsignup-input uk-form-small" type="text" placeholder="密码" name="signin-password">
                     <button class="uk-button uk-button-primary uk-button-small" id="signup-button">登录</button>
-                </form>
+                </div>
             </div>
         </div>
 
@@ -41,7 +42,7 @@
     var signup = new Vue({
         el:'#signup-form',
         data:{
-            signup_nickname:'test111',
+            signup_nickname:'',
             signup_email:'',
             signup_password:'',
             signup_password2:'',
@@ -49,15 +50,13 @@
         },
         methods:{
             toSignup:function(){
-                $.ajax({
-                    type:'POST',
-                    url:'/api/users',
-                    data:{
-                        nickname:this.signup_nickname,
-                        email:this.signup_email,
-                        password:this.password
-                    },
-                    dataType:"application/json"
+
+                $.post('/api/users',{
+                    nickname:"111",
+                    email:"222",
+                    password:"3333"
+                }, function(err,r){
+                    return location.assign('/');
                 });
             }
         }
