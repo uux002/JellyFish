@@ -194,6 +194,13 @@ def api_get_zhenxinhua(*, page='1'):
 def api_get_damaoxian(*, page='1'):
     pass
 
+@post('/api/users')
+#def api_register_user(*, nickname, email, password):
+def api_register_user():
+    #logging.info("===========> %s %s %s" % (nickname, email, password))
+    logging.info("==============> On Register Function") 
+    #return r
+
 @post('/api/public')
 def api_public():
     pass
@@ -292,7 +299,7 @@ def manage_create_blog():
         'action': '/api/blogs'
     }
 
-
+'''
 
 @post('/api/users')
 def api_register_user(*, email, name, passwd):
@@ -316,6 +323,7 @@ def api_register_user(*, email, name, passwd):
     r.content_type = 'application/json'
     r.body = json.dumps(user, ensure_ascii=False).encode('utf-8')
     return r
+'''
 
 @get('/api/blogs')
 def api_blogs(*, page='1'):

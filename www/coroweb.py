@@ -88,10 +88,12 @@ class RequestHandler(object):
     async def __call__(self, request):
         kw = None
         if self._has_var_kw_arg or self._has_named_kw_args or self._required_kw_args:
+            logging.info("================666666")
             if request.method == 'POST':
                 if not request.content_type:
                     return web.HTTPBadRequest('Missing Content-Type.')
                 ct = request.content_type.lower()
+                logging.info("================= CT:" + ct)
                 if ct.startswith('application/json'):
                     params = await request.json()
                     if not isinstance(params, dict):
@@ -126,10 +128,12 @@ class RequestHandler(object):
         if self._has_request_arg:
             kw['request'] = request
         # check required kw:
+        
         if self._required_kw_args:
             for name in self._required_kw_args:
                 if not name in kw:
                     return web.HTTPBadRequest('Missing argument: %s' % name)
+        
         logging.info('call with args: %s' % str(kw))
         try:
             r = await self._func(**kw)
