@@ -4,16 +4,18 @@
 {% include 'signinsignupheader.html' %}
 
 <div id="signinsignup" class="uk-flex uk-flex-center uk-width-1-1">
+    
     <div>
         <div uk-grid>
-            <div id="signup-field">
+            <div id="signup-field"> 
                 <div class="signinsignup-title">建立一个新账户</div>
                 <div style="height:10px;"></div>
                 <div id="signup-form">
                     <input v-model="signup_nickname" class="uk-input signinsignup-input uk-form-small" type="text" placeholder="想个好听的昵称" name="nickname">
-                    <input v-model="signup_email" class="uk-input signinsignup-input uk-form-small" type="text" placeholder="密码" name="signup-password">
-                    <input v-model="signup_password" class="uk-input signinsignup-input uk-form-small" type="text" placeholder="确认密码" name="signup-confirm-password">
-                    <input v-model="signup_password2" class="uk-input signinsignup-input uk-form-small" type="text" placeholder="电子邮箱" name="signup-email">
+                    <input v-model="signup_nickname_error" v-if="signup_nickname_seen" type="text">
+                    <input v-model="signup_password" class="uk-input signinsignup-input uk-form-small" type="password" placeholder="密码" name="signup-password">
+                    <input v-model="signup_password2" class="uk-input signinsignup-input uk-form-small" type="password" placeholder="确认密码" name="signup-confirm-password">
+                    <input v-model="signup_email" class="uk-input signinsignup-input uk-form-small" type="email" placeholder="电子邮箱" name="signup-email">
                     <button v-on:click="toSignup" class="uk-button uk-button-primary uk-button-small" id="signup-button">注册</button>
                 </div>
             </div>
@@ -39,23 +41,42 @@
 </div>
 
 <script>
+
     var signup = new Vue({
         el:'#signup-form',
         data:{
+            signup_nickname_seen:false,
+
             signup_nickname:'',
             signup_email:'',
             signup_password:'',
             signup_password2:'',
-
         },
         methods:{
             toSignup:function(){
-
+                var notifications = UIkit.notification('MyMessage', {status:'danger',timeout:'1000'});
+                return;
                 $.post('/api/users',{
-                    nickname:"111",
-                    email:"222",
-                    password:"3333"
-                }, function(err,r){
+                    nickname:this.signup_nickname,
+                    email:this.signup_email,
+                    password:this.signup_password
+                }, function(data,r){
+                    if(data){
+                        if(data['result'] < 0){
+                            alert('注册失败：' + data['msg'])
+                        }
+                        else{
+                            alert('注册成功')
+                            return location.assign('/')
+                        }
+                    }
+                    else{
+                        return location.assign('/');
+                    }
+                    
+                    
+                    
+                    alert("Register faild:" + err['message'] + "  " + r);
                     return location.assign('/');
                 });
             }

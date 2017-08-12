@@ -12,9 +12,9 @@ import markdown2
 from aiohttp import web
 
 from coroweb import get, post
-from apis import Page, APIValueError, APIResourceNotFoundError
+from apis import Page, APIValueError, APIResourceNotFoundError, APIError
 
-from models import Account, User,TruthOrDare,Comment
+from models import Account, User,TruthOrDare,Comment, next_id
 from config import configs
 
 COOKIE_NAME = 'awesession'
@@ -22,6 +22,12 @@ _COOKIE_KEY = configs.session.secret
 
 _RE_EMAIL = re.compile(r'^[a-z0-9\.\-\_]+\@[a-z0-9\-\_]+(\.[a-z0-9\-\_]+){1,4}$')
 _RE_SHA1 = re.compile(r'^[0-9a-f]{40}$')
+
+def validate_email(email):
+    if len(email) > 7:
+        if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", email) != None:
+            return True
+    return False
 
 def check_admin(request):
     if request.__user__ is None or not request.__user__.admin:
@@ -196,10 +202,71 @@ def api_get_damaoxian(*, page='1'):
 
 @post('/api/users')
 #def api_register_user(*, nickname, email, password):
-def api_register_user(*, nickname, email, password):
+async def api_register_user(*, nickname, email, password):
+    '''
+    if not name or not name.strip():
+        raise APIValueError('name')
+    if not email or not _RE_EMAIL.match(email):
+        raise APIValueError('email')
+    if not passwd or not _RE_SHA1.match(passwd):
+        raise APIValueError('passwd')
+    users = yield from User.findAll('email=?', [email])
+    if len(users) > 0:
+        raise APIError('register:failed', 'email', 'Email is already in use.')
+    uid = next_id()
+    sha1_passwd = '%s:%s' % (uid, passwd)
+    user = User(id=uid, name=name.strip(), email=email, passwd=hashlib.sha1(sha1_passwd.encode('utf-8')).hexdigest(), image='http://www.gravatar.com/avatar/%s?d=mm&s=120' % hashlib.md5(email.encode('utf-8')).hexdigest())
+    yield from user.save()
+    # make session cookie:
+    r = web.Response()
+    r.set_cookie(COOKIE_NAME, user2cookie(user, 86400), max_age=86400, httponly=True)
+    user.passwd = '******'
+    r.content_type = 'application/json'
+    r.body = json.dumps(user, ensure_ascii=False).encode('utf-8')
+    return r
+    '''
+
+    if not nickname or not nickname.strip():
+        return {
+            'result':-1,
+            'msg':"昵称最好不要为空噢"
+        }
+    
+    if not email or not validate_email(email):
+        return {
+            'result':-1,
+            'msg':'你的邮箱好像是假的哎'
+        } 
+
+    if not password or not password.strip():
+        return {
+            'result':-1,
+            'msg':'你的密码是假的吧，能不能想个好一点的'
+        }
+    
+    accounts = await Account.findAll('email=?',[email])
+    if len(accounts) > 0:
+        return {
+            'result':-1,
+            'msg':'你的邮箱已经被注册了'
+        }
+        
+    uid = next_id()
+    sha1_passwd = '%s:%s' % (uid,password)
+    hexdigest = hashlib.sha1(sha1_passwd.encode('utf-8')).hexdigest()
+    account = Account(id=uid, email=email, passwd=hexdigest)
+    logging.info(">>>>>>>>>>>>>>> uid:" + account.id)
+    logging.info(">>>>>>>>>>>>>>> email:" + account.email)
+    logging.info(">>>>>>>>>>>>>>> password:" + account.passwd)
+    await account.save()
     logging.info("==============> On Register Function") 
     logging.info("===========> %s %s %s" % (nickname, email, password))
-    #return r
+
+    return {
+        'result':0,
+        'msg':'注册成功'
+    }
+
 
 @post('/api/public')
 def api_public():
