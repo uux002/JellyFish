@@ -17,7 +17,7 @@ from coroweb import add_routes, add_static
 
 from config import configs
 
-from handlers import cookie2user, COOKIE_NAME
+from handlers import cookie2account, COOKIE_NAME
 
 import models
 
@@ -55,11 +55,17 @@ async def auth_factory(app,handler):
     async def auth(request):
         logging.info('check user: %s %s' % (request.method,request.path))
         request.__user__ = None
-        cookie_str = request.cookies.get(COOKIE_NAME)
+        #cookie_str = request.cookies.get(COOKIE_NAME)
+        
+        cookie_str = None
+
+        # ==============> TODO: Read Cookie
+
         if cookie_str:
-            user = await cookie2user(cookie_str)
+            logging.info("============> Cookie Str:" + cookie_str)
+            user = await cookie2account(cookie_str)
             if user:
-                logging.info('set current user: %s' % user.email)
+                logging.info('set current user: %s' % user.nickname)
                 request.__user__ = user
         # tmp code
         #user = await cookie2user(cookie_str)
