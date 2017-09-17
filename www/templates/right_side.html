@@ -7,25 +7,28 @@
         </form>
     </div>
 
+    {% if not __user__ %}
     <div id="right-side-login-field">
-        <form>
+        <div id="right-side-signin-form">
             <div uk-grid class="uk-padding-remove uk-margin-remove">
                 <div class="right-side-login-input">
-                    <input class="uk-input uk-form-small" type="text" placeholder="使用者名称">
+                    <input v-model="signin_email" class="uk-input uk-form-small" type="text" placeholder="登入邮箱">
                 </div>
 
                 <div class="right-side-login-input">
-                    <input class="uk-input uk-form-small" type="text" placeholder="密码">
+                    <input v-model="signin_password" class="uk-input uk-form-small" type="password" placeholder="登入密码">
                 </div>
             </div>
-
+            
             <div id="right-side-login-remember">
                 <label><input class="uk-checkbox" type="checkbox" checked> 记住我</label>
-                <a href="#">重设密码</a>
-                <button class="uk-button uk-button-default uk-button-small">登入</button>
+                <a href="/resetpassword">重设密码</a>
+                <button v-on:click="toSignin" class="uk-button uk-button-default uk-button-small">登入</button>
             </div>
-        </form>
+            
+        </div>
     </div>
+    {% endif %}
 
     <div id="right-side-money-1" class="right-side-money">
         ad-1
@@ -41,3 +44,55 @@
     </div>
         
 </div>
+
+
+<script>
+
+ function validateEmail(email) {
+        var re = /^[a-z0-9\.\-\_]+\@[a-z0-9\-\_]+(\.[a-z0-9\-\_]+){1,4}$/;
+        return re.test(email.toLowerCase());
+    }
+
+
+var signin = new Vue({
+        el:'#right-side-signin-form',
+        data:{
+            signin_email:'',
+            signin_password:''
+        },
+        methods:{
+            toSignin:function(){
+
+                if(!validateEmail(this.signin_email.trim().toLowerCase())){
+                    UIkit.notification('<span style="font-size:14px;">请输入正确的Email' + '</span>', {status:'danger',timeout:'2000'});
+                    return;
+                }
+
+                if(this.signin_password.length < 6){
+                    UIkit.notification('<span style="font-size:14px;">请输入正确的密码' + '</span>', {status:'danger',timeout:'2000'});
+                    return;
+                }
+
+                $.post('/api/signin',{
+                    email:this.signin_email,
+                    passwd: CryptoJS.SHA1(this.signin_email + ':' + this.signin_password).toString()
+                }, function(data,r){
+                    if(data){
+                        if(data['result'] < 0){
+                            UIkit.notification('<span style="font-size:14px;">登录失败: ' + data['msg'] + '</span>', {status:'danger',timeout:'2000'});
+                        }
+                        else{
+                            //alert(data['msg'])
+                            return location.assign('/');
+                        }
+                    }
+                    else{
+                        return location.assign('/')
+                    }
+                });
+            }
+        }
+    });
+
+
+</script>

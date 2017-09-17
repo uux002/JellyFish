@@ -1,8 +1,11 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 '''
 Default configurations.
 '''
+
+__author__ = 'Michael Liao'
 
 configs = {
     'debug': True,
@@ -11,13 +14,11 @@ configs = {
         'port': 3306,
         'user': 'root',
         'password': 'jkilopqcv0968',
-        'database': 'db_zhenxinhuadamaoxian_01'
-    },
-    'web':{
-        'host':'127.0.0.1',
-        'port':9000,
+        'db': 'db_zhenxinhuadamaoxian_01'
     },
     'session': {
-        'secret': 'zhenxinhuadamaoxian_01'
+        'secret': 'ZhenXinHuaDaMaoXian_01'
     }
 }
+
+

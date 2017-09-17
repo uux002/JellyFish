@@ -4,7 +4,6 @@
 {% include 'signinsignupheader.html' %}
 
 <div id="signinsignup" class="uk-flex uk-flex-center uk-width-1-1">
-    
     <div>
         <div uk-grid>
             <div id="signup-field"> 
@@ -41,6 +40,11 @@
 
 <script>
 
+    function validateEmail(email) {
+        var re = /^[a-z0-9\.\-\_]+\@[a-z0-9\-\_]+(\.[a-z0-9\-\_]+){1,4}$/;
+        return re.test(email.toLowerCase());
+    }
+
     var signup = new Vue({
         el:'#signup-form',
         data:{
@@ -51,10 +55,31 @@
         },
         methods:{
             toSignup:function(){
+                if(!this.signup_nickname.trim()){
+                    UIkit.notification('<span style="font-size:14px;">加入前先想一个昵称吧' + '</span>', {status:'danger',timeout:'2000'});
+                    return;
+                }
+
+                if(!validateEmail(this.signup_email.trim().toLowerCase())){
+                    UIkit.notification('<span style="font-size:14px;">请输入正确的Email' + '</span>', {status:'danger',timeout:'2000'});
+                    return;
+                }
+
+                if(this.signup_password.length < 6){
+                    UIkit.notification('<span style="font-size:14px;">密码长度至少是6个字符' + '</span>', {status:'danger',timeout:'2000'});
+                    return;
+                }
+
+                if(this.signup_password !== this.signup_password2){
+                    UIkit.notification('<span style="font-size:14px;">两次输入的密码不一样噢' + '</span>', {status:'danger',timeout:'2000'});
+                    return;
+                }
+
                 $.post('/api/users',{
                     nickname:this.signup_nickname,
                     email:this.signup_email,
-                    password:this.signup_password
+                    //password:this.signup_password
+                    password: CryptoJS.SHA1(this.signup_email + ':' + this.signup_password).toString()
                 }, function(data,r){
                     if(data){
                         if(data['result'] < 0){
@@ -72,6 +97,7 @@
         }
     });
     
+    
     var signin = new Vue({
         el:'#signin-form',
         data:{
@@ -80,16 +106,27 @@
         },
         methods:{
             toSignin:function(){
+
+                if(!validateEmail(this.signin_email.trim().toLowerCase())){
+                    UIkit.notification('<span style="font-size:14px;">请输入正确的Email' + '</span>', {status:'danger',timeout:'2000'});
+                    return;
+                }
+
+                if(this.signin_password.length < 6){
+                    UIkit.notification('<span style="font-size:14px;">请输入正确的密码' + '</span>', {status:'danger',timeout:'2000'});
+                    return;
+                }
+
                 $.post('/api/signin',{
                     email:this.signin_email,
-                    password:this.signin_password
+                    passwd: CryptoJS.SHA1(this.signin_email + ':' + this.signin_password).toString()
                 }, function(data,r){
                     if(data){
                         if(data['result'] < 0){
                             UIkit.notification('<span style="font-size:14px;">登录失败: ' + data['msg'] + '</span>', {status:'danger',timeout:'2000'});
                         }
                         else{
-                            alert(data['msg'])
+                            //alert(data['msg'])
                             return location.assign('/');
                         }
                     }
